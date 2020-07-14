@@ -12,12 +12,17 @@ package chloedev.serialization;
  * @author ces
  */
 import java.io.*;
+import java.util.Date;
 
 public class Dog implements Serializable {
     private String name;
     private String breed;
-    private Boolean male;
-    private int birthyear;
+    private String sex;
+    Date birthdate =  new Date();
+    
+    public Dog() {
+        // constructor
+    }
     
     public String getName() {
         return name;
@@ -34,65 +39,22 @@ public class Dog implements Serializable {
     public void setBreed(String newBreed) {
         this.breed = newBreed;
     }
-   
     
-    public static void main(String[] args) {
-        Dog dog1 = new Dog();
-        dog1.setName("Louie");
-        dog1.setBreed("goldendoodle");
-        dog1.male = true;
-        dog1.birthyear = 2015;
-        
-        System.out.println(dog1.getName());
-        
-        String filename = "file.csv"; 
-          
-        try
-        {    
-            FileOutputStream file = new FileOutputStream(filename); 
-            ObjectOutputStream out = new ObjectOutputStream(file); 
-              
-            out.writeObject(dog1); 
-              
-            out.close(); 
-            file.close(); 
-              
-            System.out.println("Dog has been serialized :)"); 
-  
-        } 
-          
-        catch(IOException except) 
-        { 
-            System.out.println("IOException is caught"); 
-        } 
-  
-  
-        Dog dog2 = null; 
-  
-        try
-        {    
-            FileInputStream file = new FileInputStream(filename); 
-            ObjectInputStream in = new ObjectInputStream(file); 
-              
-            dog2 = (Dog)in.readObject(); 
-              
-            in.close(); 
-            file.close(); 
-              
-            System.out.println("Dog has been deserialized "); 
-            System.out.println("breed = " + dog2.getBreed()); 
-            System.out.println("name = " + dog2.getName()); 
-        } 
-          
-        catch(IOException except) 
-        { 
-            System.out.println("IOException is caught"); 
-        } 
-          
-        catch(ClassNotFoundException except) 
-        { 
-            System.out.println("ClassNotFoundException is caught"); 
-        } 
-  
+    public String getSex() {
+        return sex;
     } 
-} 
+    
+    public void setSex(String newSex) {
+        this.sex = newSex;
+   
+    }
+    
+    public Date getBirthDate() {
+        return birthdate;
+    }
+    
+    public void setBirthDate(Date newBirthDate) {
+        this.birthdate = newBirthDate;
+    }
+    
+}
