@@ -17,6 +17,9 @@ public class DogDriver {
         Dog dog1 = new Dog();
         dog1.setName("Louie");
         dog1.setBreed("goldendoodle");
+        dog1.setOwner("Chloe");
+        dog1.setSex("boy");
+        dog1.setBirthDate("2016-05-31");
         
         System.out.println(dog1.getName());
         
@@ -56,7 +59,10 @@ public class DogDriver {
               
             System.out.println("Dog has been deserialized "); 
             System.out.println("breed = " + dog2.getBreed()); 
-            System.out.println("name = " + dog2.getName()); 
+            System.out.println("name = " + dog2.getName());
+            System.out.println(dog2);
+
+            System.out.println(dog1.equals(dog2));
         } 
           
         catch(IOException except) 
