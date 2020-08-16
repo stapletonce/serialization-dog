@@ -61,6 +61,7 @@ public class DogDriver {
             System.out.println("breed = " + dog2.getBreed()); 
             System.out.println("name = " + dog2.getName());
             System.out.println(dog2);
+            System.out.println(dog2.prettyPrint());
 
             System.out.println(dog1.equals(dog2));
         } 

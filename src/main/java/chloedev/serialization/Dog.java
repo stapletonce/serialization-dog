@@ -19,42 +19,66 @@ import java.time.LocalDate;
 import java.util.Date;
 import org.testng.annotations.Test;
 
-public class Dog implements Serializable {
+public class Dog implements Serializable, Comparable<Dog> {
     private String name;
     private String owner;
     private String breed;
     private String sex;
     LocalDate birthdate;
-    
+
+
     public Dog() {
         // constructor
     }
 
-    public String toString() {
+    public String prettyPrint() {
         return name + " - " + breed + " - " + owner;
     }
 
-    public boolean equals(Dog otherDog) {
-        System.out.println(this);
-        System.out.println(otherDog);
-        if (!(name.equals(otherDog.getName()))) {
-            return false;
-        }
-        if (!(owner.equals(otherDog.getOwner()))) {
-            return false;
-        }
-        if (!(breed.equals(otherDog.getBreed()))) {
-            return false;
-        }
-        if (!(sex.equals(otherDog.getSex()))) {
-            return false;
-        }
-        if (!(birthdate.equals(otherDog.getBirthDate()))) {
-            return false;
-        }
-        return true;
+    public int compareTo(Dog otherDog) {
+        //  TODO
+        return 0;
     }
 
+    @Override
+    public int hashCode() {
+        int result = 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (owner != null ? owner.hashCode() : 0);
+        result = 31 * result + (breed != null ? breed.hashCode() : 0);
+        result = 31 * result + (sex != null ? sex.hashCode() : 0);
+        result = 31 * result + (birthdate != null ? birthdate.hashCode() : 0);
+
+        return result;
+    }
+
+    public boolean equals(Dog otherDog) {
+        System.out.println(this.hashCode());
+        System.out.println(otherDog.hashCode());
+
+        int ret = 0;
+        if (this.hashCode() == otherDog.hashCode() && (name.equals(otherDog.getName()))) {
+            ret++;
+        }
+        if (this.hashCode() == otherDog.hashCode() && (owner.equals(otherDog.getOwner()))) {
+            ret++;
+        }
+        if (this.hashCode() == otherDog.hashCode() && (breed.equals(otherDog.getBreed()))) {
+            ret++;
+        }
+        if (this.hashCode() == otherDog.hashCode() && (sex.equals(otherDog.getSex()))) {
+            ret++;
+        }
+        if (this.hashCode() == otherDog.hashCode() &&(birthdate.equals(otherDog.getBirthDate()))) {
+            ret++;
+        }
+        if (ret == 5) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     public String getName() {
         return name;
