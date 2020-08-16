@@ -28,8 +28,22 @@ public class Dog implements Serializable, Comparable<Dog> {
 
 
     public Dog() {
-        // constructor
+        this.setName(null);
+        this.setOwner(null);
+        this.setBreed(null);
+        this.setSex(null);
+        this.setBirthDate(null);
     }
+
+    public Dog(String name, String owner, String breed, String sex, String birthdate) {
+        this.setName(name);
+        this.setOwner(owner);
+        this.setBreed(breed);
+        this.setSex(sex);
+        this.setBirthDate(birthdate);
+    }
+
+
 
     public String prettyPrint() {
         return name + " - " + breed + " - " + owner;
