@@ -15,7 +15,7 @@ class DogTest {
         dog1.setBreed("goldendoodle");
         dog1.setOwner("Chloe");
         dog1.setSex("boy");
-        dog1.setBirthDate("2016-05-31");
+        dog1.setBirthDate(5, 31, 2016);
 
         String filename = "file.csv";
 

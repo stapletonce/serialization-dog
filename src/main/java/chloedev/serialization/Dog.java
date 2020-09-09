@@ -14,10 +14,15 @@ package chloedev.serialization;
 import groovy.transform.ASTTest;
 
 import java.io.*;
-import java.text.SimpleDateFormat;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.Date;
 import org.testng.annotations.Test;
+import java.nio.charset.Charset;
+
 
 public class Dog implements Serializable, Comparable<Dog> {
     private String name;
@@ -26,23 +31,21 @@ public class Dog implements Serializable, Comparable<Dog> {
     private String sex;
     LocalDate birthdate;
 
-
     public Dog() {
-        this.setName(null);
-        this.setOwner(null);
-        this.setBreed(null);
-        this.setSex(null);
-        this.setBirthDate(null);
+       this.name = null;
+       this.breed = null;
+       this.breed = null;
+       this.sex = null;
+       this.birthdate = null;
     }
 
-    public Dog(String name, String owner, String breed, String sex, String birthdate) {
+    public Dog(String name, String owner, String breed, String sex, int month, int day, int year) {
         this.setName(name);
         this.setOwner(owner);
         this.setBreed(breed);
         this.setSex(sex);
-        this.setBirthDate(birthdate);
+        this.setBirthDate(year, month, day);
     }
-
 
 
     public String prettyPrint() {
@@ -70,6 +73,8 @@ public class Dog implements Serializable, Comparable<Dog> {
         System.out.println(this.hashCode());
         System.out.println(otherDog.hashCode());
 
+        Boolean passed = false;
+
         int ret = 0;
         if (this.hashCode() == otherDog.hashCode() && (name.equals(otherDog.getName()))) {
             ret++;
@@ -87,11 +92,10 @@ public class Dog implements Serializable, Comparable<Dog> {
             ret++;
         }
         if (ret == 5) {
-            return true;
+            passed = true;
         }
-        else {
-            return false;
-        }
+
+        return passed;
     }
 
     public String getName() {
@@ -126,14 +130,39 @@ public class Dog implements Serializable, Comparable<Dog> {
         this.sex = newSex;
    
     }
-    
+
     public LocalDate getBirthDate() {
         return birthdate;
     }
     
-    public void setBirthDate(String date) {
-        LocalDate newBirthDate = LocalDate.parse(date);
+    public void setBirthDate(int month, int day, int year) {
+        LocalDate newBirthDate = LocalDate.of(year, month, day);
         this.birthdate = newBirthDate;
+    }
+
+    public void serialize() throws IOException {
+
+        // Path currentDir = Paths.get(".");
+        // Path fullPath = currentDir.toAbsolutePath();
+        // Path one = currentDir.resolve("file.csv");
+        // Path fileName = one.getFileName();
+
+        // Files.newBufferedWriter(fileName);
+
+        // Charset charset = StandardCharsets.UTF_8;
+
+        PrintWriter outputWriter = new PrintWriter("file2.csv","UTF-8");
+        outputWriter.write(this.name + ", ");
+        outputWriter.write(this.breed + ", ");
+        outputWriter.write(this.sex + ", ");
+        outputWriter.write(this.birthdate + ", ");
+
+        System.out.println("hey");
+
+    }
+
+    public void deserialize(Dog dog) {
+
     }
 
 }
