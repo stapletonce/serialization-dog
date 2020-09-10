@@ -21,63 +21,15 @@ public class DogDriver {
         dog1.setSex("boy");
         dog1.setBirthDate(05, 31, 2016);
         
-        System.out.println(dog1.getName());
+        // System.out.println(dog1.getName());
         
         String filename = "file.csv";
 
-        dog1.serialize();
+        dog1.serializeToCSV(dog1);
+
+        dog1.deserializeFromCSV();
           
-//        try
-//        {
-//            FileOutputStream file = new FileOutputStream(filename);
-//            ObjectOutputStream out = new ObjectOutputStream(file);
-//
-//            out.writeObject(dog1);
-//
-//            out.close();
-//            file.close();
-//
-//            System.out.println("Dog has been serialized :)");
-//
-//        }
-//
-//        catch(IOException except)
-//        {
-//            System.out.println("IOException is caught");
-//        }
-//
-//
-//        Dog dog2 = null;
-//
-//        try
-//        {
-//            FileInputStream file = new FileInputStream(filename);
-//            ObjectInputStream in = new ObjectInputStream(file);
-//
-//            dog2 = (Dog)in.readObject();
-//
-//            in.close();
-//            file.close();
-//
-//            System.out.println("Dog has been deserialized ");
-//            System.out.println("breed = " + dog2.getBreed());
-//            System.out.println("name = " + dog2.getName());
-//            System.out.println(dog2);
-//            System.out.println(dog2.prettyPrint());
-//
-//            System.out.println(dog1.equals(dog2));
-//        }
-//
-//        catch(IOException except)
-//        {
-//            System.out.println("IOException is caught");
-//        }
-//
-//        catch(ClassNotFoundException except)
-//        {
-//            System.out.println("ClassNotFoundException is caught");
-//        }
-//
+
     }
     
 }

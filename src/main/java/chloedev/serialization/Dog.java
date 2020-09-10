@@ -15,6 +15,7 @@ import groovy.transform.ASTTest;
 
 import java.io.*;
 import java.net.URI;
+import java.nio.Buffer;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,6 +23,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import org.testng.annotations.Test;
 import java.nio.charset.Charset;
+import java.util.Scanner;
 
 
 public class Dog implements Serializable, Comparable<Dog> {
@@ -40,11 +42,12 @@ public class Dog implements Serializable, Comparable<Dog> {
     }
 
     public Dog(String name, String owner, String breed, String sex, int month, int day, int year) {
-        this.setName(name);
-        this.setOwner(owner);
-        this.setBreed(breed);
-        this.setSex(sex);
-        this.setBirthDate(year, month, day);
+        this.name = name;
+        this.breed = owner;
+        this.breed = breed;
+        this.sex = sex;
+        LocalDate date = LocalDate.of(year, month, day);
+        this.birthdate = date;
     }
 
 
@@ -57,45 +60,16 @@ public class Dog implements Serializable, Comparable<Dog> {
         return 0;
     }
 
-    @Override
-    public int hashCode() {
-        int result = 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (owner != null ? owner.hashCode() : 0);
-        result = 31 * result + (breed != null ? breed.hashCode() : 0);
-        result = 31 * result + (sex != null ? sex.hashCode() : 0);
-        result = 31 * result + (birthdate != null ? birthdate.hashCode() : 0);
-
-        return result;
-    }
-
     public boolean equals(Dog otherDog) {
-        System.out.println(this.hashCode());
-        System.out.println(otherDog.hashCode());
+        Boolean retVal = true;
 
-        Boolean passed = false;
+        retVal = retVal && name.equals(otherDog.getName());
+        retVal = retVal && breed.equals(otherDog.getBreed());
+        retVal = retVal && owner.equals(otherDog.getOwner());
+        retVal = retVal && sex.equals(otherDog.getSex());
+        retVal = retVal && birthdate.equals(otherDog.getBirthDate());
 
-        int ret = 0;
-        if (this.hashCode() == otherDog.hashCode() && (name.equals(otherDog.getName()))) {
-            ret++;
-        }
-        if (this.hashCode() == otherDog.hashCode() && (owner.equals(otherDog.getOwner()))) {
-            ret++;
-        }
-        if (this.hashCode() == otherDog.hashCode() && (breed.equals(otherDog.getBreed()))) {
-            ret++;
-        }
-        if (this.hashCode() == otherDog.hashCode() && (sex.equals(otherDog.getSex()))) {
-            ret++;
-        }
-        if (this.hashCode() == otherDog.hashCode() &&(birthdate.equals(otherDog.getBirthDate()))) {
-            ret++;
-        }
-        if (ret == 5) {
-            passed = true;
-        }
-
-        return passed;
+        return retVal;
     }
 
     public String getName() {
@@ -128,7 +102,6 @@ public class Dog implements Serializable, Comparable<Dog> {
     
     public void setSex(String newSex) {
         this.sex = newSex;
-   
     }
 
     public LocalDate getBirthDate() {
@@ -140,29 +113,39 @@ public class Dog implements Serializable, Comparable<Dog> {
         this.birthdate = newBirthDate;
     }
 
-    public void serialize() throws IOException {
-
-        // Path currentDir = Paths.get(".");
-        // Path fullPath = currentDir.toAbsolutePath();
-        // Path one = currentDir.resolve("file.csv");
-        // Path fileName = one.getFileName();
-
-        // Files.newBufferedWriter(fileName);
-
-        // Charset charset = StandardCharsets.UTF_8;
-
+    public static void serializeToCSV(Dog dog) throws IOException {   // argument output file, and dog to serialize
         PrintWriter outputWriter = new PrintWriter("file2.csv","UTF-8");
-        outputWriter.write(this.name + ", ");
-        outputWriter.write(this.breed + ", ");
-        outputWriter.write(this.sex + ", ");
-        outputWriter.write(this.birthdate + ", ");
+        outputWriter.write(dog.name + ", ");
+        outputWriter.write(dog.breed + ", ");
+        outputWriter.write(dog.sex + ", ");
+        outputWriter.write(dog.owner + ", ");
+        outputWriter.write(String.valueOf(dog.birthdate));
 
-        System.out.println("hey");
-
+        outputWriter.close();
     }
 
-    public void deserialize(Dog dog) {
+    public static Dog deserializeFromCSV() throws IOException { // return a Dog, argument input file
 
+        Dog dog = new Dog();
+        File csv = new File("file2.csv");
+
+        String cvsSplitBy = ", ";
+        BufferedReader br = new BufferedReader(new FileReader(csv));
+
+        String[] dogcsv = br.readLine().split(cvsSplitBy);
+
+        dog.name = dogcsv[0];
+        // System.out.println(dog.name);
+        dog.breed = dogcsv[1];
+        // System.out.println(dog.breed);
+        dog.sex = dogcsv[2];
+        // System.out.println(dog.sex);
+        dog.owner = dogcsv[3];
+        // System.out.println(dog.owner);
+        dog.birthdate = LocalDate.parse(dogcsv[4]);
+        // System.out.println(dog.birthdate);
+
+        return dog;
     }
 
 }
