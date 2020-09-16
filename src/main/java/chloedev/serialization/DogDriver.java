@@ -7,29 +7,45 @@ package chloedev.serialization;
 
 import java.io.*;
 
+import static chloedev.serialization.BinSerialization.*;
+
+
 /**
  *
  * @author ces
  */
 public class DogDriver {
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Dog dog1 = new Dog();
         dog1.setName("Louie");
         dog1.setBreed("goldendoodle");
         dog1.setOwner("Chloe");
         dog1.setSex("boy");
         dog1.setBirthDate(05, 31, 2016);
-        
-        // System.out.println(dog1.getName());
-        
-        String filename = "file.csv";
+
+        String csvfilename = "file.csv";
 
         dog1.serializeToCSV(dog1);
+        System.out.println("Serialized!");
 
         dog1.deserializeFromCSV();
-          
+        System.out.println("And now deserialized!");
+
+        String binfilename = "file2.ser";
+
+        serializeBinary(dog1, binfilename);
+
+        System.out.println("Binary Serialized!");
+
+        Dog dog2 = (Dog) deserializeBinary(dog1, binfilename);
+
+        System.out.println("Binary Deserialized!");
+        System.out.println(dog2.prettyPrint());
+
+
+
 
     }
-    
+
 }
