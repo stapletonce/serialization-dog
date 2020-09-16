@@ -1,59 +1,37 @@
 package chloedev.serialization;
 
+import org.junit.Before;
 import org.testng.annotations.Test;
 
 import java.io.*;
 
+import static chloedev.serialization.BinSerialization.deserializeBinary;
+import static chloedev.serialization.BinSerialization.serializeBinary;
+import static org.junit.Assert.assertEquals;
+
 class DogTest {
 
-    @Test
-    public void serializeDogTest() {
-        Dog dog1 = new Dog();
+    Dog dog1 = new Dog();
+    String csvfilename = "csvtest.csv";
+    String binfilename = "bintest.ser";
+
+    @Before
+    public void setUp() {
         dog1.setName("Louie");
         dog1.setBreed("goldendoodle");
         dog1.setOwner("Chloe");
         dog1.setSex("boy");
         dog1.setBirthDate(5, 31, 2016);
 
-        String filename = "file.csv";
+    }
 
-        try
-        {
-            FileOutputStream file = new FileOutputStream(filename);
-            ObjectOutputStream out = new ObjectOutputStream(file);
+    @Test
+    public void goodBin() throws IOException, ClassNotFoundException {
 
-            out.writeObject(dog1);
+        serializeBinary(dog1, binfilename);
+        Dog dog2 = (Dog) deserializeBinary(dog1, binfilename);
 
-            out.close();
-            file.close();
-
-        }
-
-        catch(IOException except)
-        {
-            System.out.println("IOException is caught");
-        }
-
-        Dog dog2 = null;
-
-        try
-        {
-            FileInputStream file = new FileInputStream(filename);
-            ObjectInputStream in = new ObjectInputStream(file);
-
-            dog2 = (Dog)in.readObject();
-
-            in.close();
-            file.close();
-
-        }
-
-        catch(IOException | ClassNotFoundException except)
-        {
-            System.out.println("IOException is caught");
-        }
-
-        // assertEquals(dog1, dog2);
+        assertEquals(dog1, dog2);
 
     }
 

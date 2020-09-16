@@ -8,7 +8,7 @@ package chloedev.serialization;
 import java.io.*;
 
 import static chloedev.serialization.BinSerialization.*;
-
+import static chloedev.serialization.Dog.*;
 
 /**
  *
@@ -26,10 +26,10 @@ public class DogDriver {
 
         String csvfilename = "file.csv";
 
-        dog1.serializeToCSV(dog1);
+        serializeToCSV(dog1);
         System.out.println("Serialized!");
 
-        dog1.deserializeFromCSV();
+        deserializeFromCSV();
         System.out.println("And now deserialized!");
 
         String binfilename = "file2.ser";
